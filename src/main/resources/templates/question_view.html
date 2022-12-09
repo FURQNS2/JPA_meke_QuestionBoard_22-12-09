@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+	
+<div class="container my-3">
+	<!-- 질문 내용 보기 -->	
+	<h2 class="border-bottom py-2" th:text="${question.subject}"></h2>
+	<div class="card my-3">
+		<div class="card-body">
+			<div class="card-text" style="white-space:pre-line;" th:text="${question.content}"></div>			
+			<div class="d-flex justify-content-end">
+				<div class="badge bg-light text-info">
+					<div th:text="${#temporals.format(question.createDate,'yyyy-MM-dd HH:mm')}"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 질문 내용 끝 -->
+	<!-- 답변 개수 출력 -->
+		<h3  th:text="|${#lists.size(question.answerList)}개의 답변이 있습니다.|"></h3>
+	<!-- 답변 개수 출력 끝 -->
+
+	<!-- 답변 내용 반복 시작 -->
+	
+	
+	
+	<div th:each="answer : ${question.answerList}">
+		<div class="card-text" th:text="${answer.content}"></div>
+	</div>
+	
+		
+	<!-- 답변 내용 반복 끝 -->
+	<!-- 답변 내용 작성 -->
+	<form th:action="@{|/answerCreate/${question.id}|}" method="get">
+		<textarea rows="10" cols="60" name="content" id="content"></textarea><br>
+		<input type="submit" value="답변등록" id="answer_submit">
+	</form>
+	<!-- 답변 내용 작성 끝 -->
+</div>
+
+</body>
+</html>
